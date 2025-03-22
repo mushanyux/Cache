@@ -12,7 +12,7 @@ template<typename Key, typename Value>
 class ArcCache : public CacheSer<Key, Value> 
 {
 public:
-    explicit KArcCache(size_t capacity = 10, size_t transformThreshold = 2)
+    explicit ArcCache(size_t capacWity = 10, size_t transformThreshold = 2)
         : capacity_(capacity)
         , transformThreshold_(transformThreshold)
         , lruPart_(std::make_unique<ArcLruPart<Key, Value>>(capacity, transformThreshold))
