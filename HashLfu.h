@@ -4,10 +4,10 @@
 
 namespace MyHash {
 template<typename Key, typename Value>
-class KHashLfuCache
+class HashLfu
 {
 public:
-    KHashLfuCache(size_t capacity, int sliceNum, int maxAverageNum = 10)
+    HashLfu(size_t capacity, int sliceNum, int maxAverageNum = 10)
         : sliceNum_(sliceNum > 0 ? sliceNum : std::thread::hardware_concurrency())
         , capacity_(capacity)
     {
