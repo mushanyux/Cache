@@ -12,7 +12,7 @@
 #include "LruBase.h"
 #include "kLruCache.h"
 #include "ArcCache.h"
-#include "HashLfu.h"
+#include "HashLfuCache.h"
 #include "HashLruCache.h"
 
 class Timer {
