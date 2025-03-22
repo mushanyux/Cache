@@ -1,4 +1,13 @@
-template<typename Key, typename Value> class KLruCache;
+#pragma once
+
+#include <memory>
+#include <mutex>
+#include <unordered_map>
+#include "CacheSer.h"
+
+namespace MyCache 
+{
+template<typename Key, typename Value> class LruBase;
 
 template<typename Key, typename Value>
 class LruNode 
@@ -25,25 +34,25 @@ public:
     size_t getAccessCount() const { return accessCount_; }
     void incrementAccessCount() { ++accessCount_; }
 
-    friend class KLruCache<Key, Value>;
+    friend class LruBase<Key, Value>;
 };
 
 
 template<typename Key, typename Value>
-class KLruCache : public KICachePolicy<Key, Value>
+class LruBase : public CacheSer<Key, Value>
 {
 public:
     using LruNodeType = LruNode<Key, Value>;
     using NodePtr = std::shared_ptr<LruNodeType>;
     using NodeMap = std::unordered_map<Key, NodePtr>;
 
-    KLruCache(int capacity)
+    LruBase(int capacity)
         : capacity_(capacity)
     {
         initializeList();
     }
 
-    ~KLruCache() override = default;
+    ~LruBase() override = default;
 
     void put(Key key, Value value) override
     {
@@ -150,6 +159,7 @@ private:
     int          capacity_; 
     NodeMap      nodeMap_; 
     std::mutex   mutex_;
-    NodePtr       dummyHead_; 
-    NodePtr       dummyTail_;
+    NodePtr      dummyHead_; 
+    NodePtr      dummyTail_;
 };
+}
